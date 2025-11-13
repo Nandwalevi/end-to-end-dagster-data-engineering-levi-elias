@@ -1,0 +1,12 @@
+dagster
+pandas
+pytest
+psycopg2-binary>=2.9
+sqlalchemy>=1.4
+dagster-postgres
+dagster-supabase
+supabase
+python-dotenv
+dagit
+fastapi
+uvicorn

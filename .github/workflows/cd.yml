@@ -1,0 +1,17 @@
+jobs:
+  deploy:
+    needs: test
+    strategy:
+      matrix: { env: [dev, staging, prod] }
+    runs-on: ubuntu-latest
+    environment: ${{ matrix.env }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: set-kube-config
+        uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+      - run: |
+          kustomize build k8s/overlays/${{ matrix.env }} | kubectl apply -f -
+          kubectl rollout status deployment/dagster-daemon -n dagster-${{ matrix.env }}

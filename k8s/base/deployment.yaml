@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dagster-daemon
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: dagster-daemon }
+  template:
+    metadata:
+      labels: { app: dagster-daemon }
+    spec:
+      containers:
+      - name: dagster
+        image: ghcr.io/your-org/dagster-e2e
+        ports: [containerPort: 4000]
